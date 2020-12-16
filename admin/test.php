@@ -227,7 +227,8 @@ if ($_GET['del'])
                  </tr>
                  </thead>
              <tbody>
-			<?php
+            <?php
+            print_r($con);die;
 				$i = 0;
 				$query = "SELECT * FROM `question_categories`  WHERE `deleted` = '0' ORDER BY `title` ASC";
 				$result=mysqli_query($query,$con) or die('error connecting55'); 
