@@ -1,10 +1,10 @@
 <?php
 
-	$dbhost = "localhost";
-	$dbuser = "root";
-	$dbpass = "";
+	$dbhost = "academyjob.org";
+	$dbuser = "onclickj_main";
+	$dbpass = "parnasa2020";
 		
-	$con = mysqli_connect($dbhost, $dbuser, $dbpass,'ofer');
+	$con = mysqli_connect($dbhost, $dbuser, $dbpass,'zambura');
 	 if(! $con )
     	{
 	  die('Could not connect: ' . mysqli_error($con));
