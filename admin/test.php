@@ -228,10 +228,10 @@ if ($_GET['del'])
                  </thead>
              <tbody>
             <?php
-            print_r($con);die;
+           
 				$i = 0;
 				$query = "SELECT * FROM `question_categories`  WHERE `deleted` = '0' ORDER BY `title` ASC";
-				$result=mysqli_query($query,$con) or die('error connecting55'); 
+				$result=mysqli_query($query,$con); 
 				$num_rows = mysqli_num_rows($result);
 				
 				while ( $row = mysqli_fetch_array($result) )
