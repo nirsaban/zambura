@@ -85,7 +85,7 @@ if ($_POST['catindex'] !="0")
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css">
-        <!-- <link rel="stylesheet" href="assets/css/vendor/animate.css">
+        <link rel="stylesheet" href="assets/css/vendor/animate.css">
         <link rel="stylesheet" href="assets/css/vendor/font-awesome.min.css">
         <link rel="stylesheet" href="assets/js/vendor/animsition/css/animsition.min.css">
         <link rel="stylesheet" href="assets/js/vendor/datatables/css/jquery.dataTables.min.css">
@@ -94,7 +94,7 @@ if ($_POST['catindex'] !="0")
         <link rel="stylesheet" href="assets/js/vendor/datatables/extensions/Responsive/css/dataTables.responsive.css">
         <link rel="stylesheet" href="assets/js/vendor/datatables/extensions/ColVis/css/dataTables.colVis.min.css">
         <link rel="stylesheet" href="assets/js/vendor/datatables/extensions/TableTools/css/dataTables.tableTools.min.css">
-        <link rel="stylesheet" href="assets/js/vendor/datetimepicker/css/bootstrap-datetimepicker.min.css"> -->
+        <link rel="stylesheet" href="assets/js/vendor/datetimepicker/css/bootstrap-datetimepicker.min.css">
 
         <!-- project main css files -->
         <link rel="stylesheet" href="assets/css/main.css">
@@ -105,7 +105,7 @@ if ($_POST['catindex'] !="0")
         <!-- ==========================================
         ================= Modernizr ===================
         =========================================== -->
-        <!-- <script src="assets/js/vendor/modernizr/modernizr-2.8.3-respond-1.4.2.min.js"></script> -->
+        <script src="assets/js/vendor/modernizr/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 </head>
 <body id="minovate" class="appWrapper" >
     <h2>hello</h2>
@@ -146,18 +146,40 @@ if ($_POST['catindex'] !="0")
                     </ul>
 
                 </li>
-    
+                
+                <!--
+                <li class="toggle-right-sidebar">
+                    <a href="#">
+                        <i class="fa fa-comments"></i>
+                    </a>
+                </li>
+                -->
             </ul>
- 
+            <!-- Right-side navigation end -->
 
 
 
         </header>
 
     </section>
+    <!--/ HEADER Content  -->
 
+
+
+
+
+    <!-- =================================================
+    ================= CONTROLS Content ===================
+    ================================================== -->
     <div id="controls">
 
+
+
+
+
+        <!-- ================================================
+        ================= SIDEBAR Content ===================
+        ================================================= -->
         
         <?
         $submenu = 'general';
@@ -169,12 +191,14 @@ if ($_POST['catindex'] !="0")
 
 
     </div>
+    <!--/ CONTROLS Content -->
 
 
 
 
-
-
+    <!-- ====================================================
+    ================= CONTENT ===============================
+    ===================================================== -->
     <section id="content">
 
         <div class="page page-full page-calendar">
@@ -520,8 +544,8 @@ if ($_POST['catindex'] !="0")
 <!-- ============================================
 ============== Vendor JavaScripts ===============
 ============================================= -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
-<!-- <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery/jquery-1.11.2.min.js"><\/script>')</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="assets/js/vendor/jquery/jquery-1.11.2.min.js"><\/script>')</script>
 
 <script src="assets/js/vendor/bootstrap/bootstrap.min.js"></script>
 
@@ -554,7 +578,7 @@ if ($_POST['catindex'] !="0")
 
 <!--/ vendor javascripts -->
 
-<!-- 
+
 <script src="assets/js/vendor/summernote/summernote.min.js"></script>
 
 <script src="assets/js/vendor/datatables/js/jquery.dataTables.min.js"></script>
@@ -562,7 +586,7 @@ if ($_POST['catindex'] !="0")
 <script src="assets/js/vendor/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
 <script src="assets/js/vendor/datatables/extensions/ColVis/js/dataTables.colVis.min.js"></script>
 <script src="assets/js/vendor/datatables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
-<script src="assets/js/vendor/datatables/extensions/dataTables.bootstrap.js"></script> --> -->
+<script src="assets/js/vendor/datatables/extensions/dataTables.bootstrap.js"></script>
 
 <!--/ vendor javascripts -->
 
@@ -585,15 +609,15 @@ if ($_POST['catindex'] !="0")
 ============== Page Specific Scripts ===============
 ================================================ -->
  <script>
-    // $(window).load(function(){
+    $(window).load(function(){
 
-    //     $('#select-all').change(function() {
-    //         if ($(this).is(":checked")) {
-    //             $('#mails-list .mail-select input').prop('checked', true);
-    //         } else {
-    //             $('#mails-list .mail-select input').prop('checked', false);
-    //         }
-    //     });
+        $('#select-all').change(function() {
+            if ($(this).is(":checked")) {
+                $('#mails-list .mail-select input').prop('checked', true);
+            } else {
+                $('#mails-list .mail-select input').prop('checked', false);
+            }
+        });
         
 
         //initialize basic datatable
@@ -615,69 +639,69 @@ if ($_POST['catindex'] !="0")
             "dom": 'Rlfrtip'
         });
         */
-        // var table = $('#basic-usage').DataTable({
-        //     "iDisplayLength": 100,
-        //     "aoColumnDefs": [
-        //       { 'bSortable': false, 'aTargets': [ "no-sort" ] }
-        //     ]
-        // });
-        // $('#basic-usage tbody').on( 'click', 'tr', function () {
-        //     if ( $(this).hasClass('row_selected') ) {
-        //         $(this).removeClass('row_selected');
-        //     }
-        //     else {
-        //         table.$('tr.row_selected').removeClass('row_selected');
-        //         $(this).addClass('row_selected');
-        //     }
-        // });
+        var table = $('#basic-usage').DataTable({
+            "iDisplayLength": 100,
+            "aoColumnDefs": [
+              { 'bSortable': false, 'aTargets': [ "no-sort" ] }
+            ]
+        });
+        $('#basic-usage tbody').on( 'click', 'tr', function () {
+            if ( $(this).hasClass('row_selected') ) {
+                $(this).removeClass('row_selected');
+            }
+            else {
+                table.$('tr.row_selected').removeClass('row_selected');
+                $(this).addClass('row_selected');
+            }
+        });
         //*initialize basic datatable
         
         
 
         
-    // });
+    });
     
-    // function editCatagory(index,title)
-    // {
-    //     //var dbtitle = $('input[name=dbtitle]').val();
-    //     //alert (dbtitle);
-    //     var dbtitle = $('#dbtitle_'+index).val();
+    function editCatagory(index,title)
+    {
+        //var dbtitle = $('input[name=dbtitle]').val();
+        //alert (dbtitle);
+        var dbtitle = $('#dbtitle_'+index).val();
 
-    //     //alert (dbtitle);
+        //alert (dbtitle);
         
         
-    //     $( "#modaltitle" ).html(title);
-    //     $("#catindex").val(index);	
-    //     $("#cattitle").val(dbtitle);	
-    // }
+        $( "#modaltitle" ).html(title);
+        $("#catindex").val(index);	
+        $("#cattitle").val(dbtitle);	
+    }
 
 
-    // function addCatagory(index,catagory,title)
-    // {
-    //     $( "#modaltitle" ).html(title);
-    //     $("#catindex").val(0);
-    //     $("#cattitle").val('');	
-    //     $("#catarea").val('');	
-    //     $("#catbuilding").val('');	
-    //     $("#catbuildname").val('');	
-    //     $("#catdev").val('');	
-    //     $("#catfloor").val('');	
-    // }
+    function addCatagory(index,catagory,title)
+    {
+        $( "#modaltitle" ).html(title);
+        $("#catindex").val(0);
+        $("#cattitle").val('');	
+        $("#catarea").val('');	
+        $("#catbuilding").val('');	
+        $("#catbuildname").val('');	
+        $("#catdev").val('');	
+        $("#catfloor").val('');	
+    }
     
-    // function addTipDate (index,title)
-    // {
-    //     $( "#modaltitle" ).html(title);
-    //     $("#tipid").val(index);	
-    // }
+    function addTipDate (index,title)
+    {
+        $( "#modaltitle" ).html(title);
+        $("#tipid").val(index);	
+    }
     
-    // function ConfirmDelete(index)
-    // {
-    //     var confirmbox = confirm("האם לאשר מחיקה?");
-    //     if (confirmbox)
-    //     {
-    //         window.location = "question_catagory.php?del="+index;
-    //     }
-    // }
+    function ConfirmDelete(index)
+    {
+        var confirmbox = confirm("האם לאשר מחיקה?");
+        if (confirmbox)
+        {
+            window.location = "question_catagory.php?del="+index;
+        }
+    }
     
     
 
