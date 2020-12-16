@@ -233,11 +233,11 @@ if ($_GET['del'])
 				$query = "SELECT * FROM `question_categories`  WHERE `deleted` = '0' ORDER BY `title` ASC";
 				$result=mysqli_query($query,$con); 
 				$num_rows = mysqli_num_rows($result);
-				echo 'hereee';die;
+				
 				while ( $row = mysqli_fetch_array($result) )
 				{
 				$i++;
-                     
+                echo 'hereee';die;
                      $query2 = "SELECT * FROM `questions`   WHERE `category_id` = '".$row['index']."'  ";
                      $result2=mysqli_query($query2,$con) or die('error connecting55');
                      $num_rows2 = mysqli_num_rows($result2);
