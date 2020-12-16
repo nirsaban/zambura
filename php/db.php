@@ -1,7 +1,7 @@
 <?php
 
 	$dbhost = "academyjob.org";
-	$dbuser = "onclickj_main";
+	$dbuser = "onclickj_zambura";
 	$dbpass = "parnasa2020";
 		
 	$con = mysqli_connect($dbhost, $dbuser, $dbpass,'zambura');
