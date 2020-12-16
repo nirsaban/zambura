@@ -1,6 +1,6 @@
 <?php
 
-	$dbhost = "academyjob.org";
+	$dbhost = "127.0.0.1";
 	$dbuser = "onclickj_zambura";
 	$dbpass = "parnasa2020";
 		
