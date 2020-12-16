@@ -234,7 +234,7 @@ if ($_GET['del'])
 				$result=mysqli_query($query,$con); 
 				$num_rows = mysqli_num_rows($result);
 				
-				while ( $row = mysqli_fetch_array($result) )
+				while ( $row = mysqli_fetch_array($result,'MYSQLI_FETCH_ASSOC') )
 				{
 				$i++;
                 echo 'hereee';die;
