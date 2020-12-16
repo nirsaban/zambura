@@ -64,7 +64,7 @@ else
 
                                                             <?php
                                                             $query5 = "SELECT * FROM `question_categories`  WHERE `deleted` = '0' ORDER BY `title` ASC ";
-                                                            $result5=mysqli_query($query5) or die('error connecting55');
+                                                            $result5=mysqli_query($query5,$con) or die('error connecting55');
 
                                                             if ($menu == "questions")
                                                                 $activeclass = "active";
@@ -75,7 +75,7 @@ else
 
 
                                                                 $query2 = "SELECT * FROM `questions`   WHERE `category_id` = '".$row5['index']."'  ";
-                                                                $result2=mysqli_query($query2) or die('error connecting55');
+                                                                $result2=mysqli_query($query2,$con) or die('error connecting55');
                                                                 $num_rows2 = mysqli_num_rows($result2);
 
                                                                 print '<li class="'.$activeclass.'"><a href="questions.php?cat='.$row5['index'].'"><i class="fa fa-caret-right"></i> '.stripslashes($row5['title']).' <span class="badge bg-lightred">'.$num_rows2.'</span></span> </a></li>';
