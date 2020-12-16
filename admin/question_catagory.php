@@ -6,31 +6,31 @@ session_start();
 include_once('../php/db.php');
 include_once('config.php');
 
-mb_internal_encoding("UTF-8");
+// mb_internal_encoding("UTF-8");
 
-if (!$_SESSION['admin'])
-{
-	header('Location: index.php');
-	exit;
-}
+// if (!$_SESSION['admin'])
+// {
+// 	header('Location: index.php');
+// 	exit;
+// }
 
-if ($_POST['catindex'] == "0")
-{
-	$sql= "INSERT INTO `question_categories` (`title`)  VALUES ('".addslashes($_POST['cattitle'])."')";
-	$InsertSql = mysqli_query($sql,$con);	
-}
+// if ($_POST['catindex'] == "0")
+// {
+// 	$sql= "INSERT INTO `question_categories` (`title`)  VALUES ('".addslashes($_POST['cattitle'])."')";
+// 	$InsertSql = mysqli_query($sql,$con);	
+// }
 
-if ($_POST['updatenew'])
-{
-	if ($_POST['catindex'] !="0")
-	{
-		$updateQuery = "UPDATE `question_categories` 
-		SET 
-		`title` ='".addslashes($_POST['cattitle'])."'
-		WHERE `index` ='".mysqli_real_escape_string($_POST['catindex'])."'";
-		$update =  mysqli_query($updateQuery,$con) or die(mysqli_error($con));  
-	}	
-}
+// if ($_POST['updatenew'])
+// {
+// 	if ($_POST['catindex'] !="0")
+// 	{
+// 		$updateQuery = "UPDATE `question_categories` 
+// 		SET 
+// 		`title` ='".addslashes($_POST['cattitle'])."'
+// 		WHERE `index` ='".mysqli_real_escape_string($_POST['catindex'])."'";
+// 		$update =  mysqli_query($updateQuery,$con) or die(mysqli_error($con));  
+// 	}	
+// }
 
 
 
@@ -60,20 +60,20 @@ if ($_POST['catindex'] !="0")
 */
 
 
-if ($_GET['del'])
-{
-	$updateQuery = "UPDATE `question_categories`
-	SET  
-	`deleted` ='1'
+// if ($_GET['del'])
+// {
+// 	$updateQuery = "UPDATE `question_categories`
+// 	SET  
+// 	`deleted` ='1'
 
-	WHERE `index` ='".mysqli_real_escape_string($_GET['del'])."'";
-	$update =  mysqli_query($updateQuery,$con) or die(mysqli_error($con)); 
+// 	WHERE `index` ='".mysqli_real_escape_string($_GET['del'])."'";
+// 	$update =  mysqli_query($updateQuery,$con) or die(mysqli_error($con)); 
 
 	
-	//$sql = "DELETE FROM `contacts` WHERE `index` = '".$_GET['del']."'";
-	//$del = mysqli_query($sql);	
+// 	//$sql = "DELETE FROM `contacts` WHERE `index` = '".$_GET['del']."'";
+// 	//$del = mysqli_query($sql);	
 
-}
+// }
 
 
 
