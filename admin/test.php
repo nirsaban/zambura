@@ -84,7 +84,7 @@ if ($_GET['del'])
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/vendor/animate.css">
         <link rel="stylesheet" href="assets/css/vendor/font-awesome.min.css">
         <link rel="stylesheet" href="assets/js/vendor/animsition/css/animsition.min.css">
@@ -96,7 +96,7 @@ if ($_GET['del'])
         <link rel="stylesheet" href="assets/js/vendor/datatables/extensions/TableTools/css/dataTables.tableTools.min.css">
         <link rel="stylesheet" href="assets/js/vendor/datetimepicker/css/bootstrap-datetimepicker.min.css">
         <link rel="stylesheet" href="assets/css/main.css">
-        <script src="assets/js/vendor/modernizr/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+        <script src="assets/js/vendor/modernizr/modernizr-2.8.3-respond-1.4.2.min.js"></script> -->
 
 </head>
  <body id="minovate" class="appWrapper">
