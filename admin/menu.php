@@ -1,179 +1,414 @@
-<?php
-$query90 = "SELECT  `read` FROM `message_specialist` WHERE `type` = 'question' AND  `read` = '0' ";
-$result90 = mysqli_query($query90,$con) or die(mysqli_error($con)); 
-$num_rows90 = mysqli_num_rows($result90);
+<?
+if (!isset($_SESSION)) {
+session_start();
+}
 
-if ($num_rows90 > 0)
-	$newMessagesCount = '<span class="badge bg-lightred">'.$num_rows90.'</span>';
-else
-    $newMessagesCount = '';
-    
+include_once('../php/db.php');
+include_once('config.php');
 
-    $query91 = "SELECT  `is_seen` FROM `first_prize_winner_bank` WHERE   `is_seen` = '0' ";
-    $result91 = mysqli_query($query91,$con) or die(mysqli_error($con)); 
-    $num_rows91 = mysqli_num_rows($result91);
-    
-    if ($num_rows91 > 0)
-        $unreadBank = '<span class="badge bg-lightred">'.$num_rows91.'</span>';
-    else
-        $unreadBank = '';
-        
-    
-        $query92 = "SELECT  `is_read` FROM `second_price_winners` WHERE   `is_read` = '0' ";
-        $result92 = mysqli_query($query92,$con) or die(mysqli_error($con)); 
-        $num_rows92 = mysqli_num_rows($result92);
-        
-        if ($num_rows92 > 0)
-            $second_price_winners = '<span class="badge bg-lightred">'.$num_rows92.'</span>';
-        else
-            $second_price_winners = '';
-            
-    
+mb_internal_encoding("UTF-8");
+
+if (!$_SESSION['admin'])
+{
+	header('Location: index.php');
+	exit;
+}
+
+if ($_POST['catindex'] == "0")
+{
+	$sql= "INSERT INTO `question_categories` (`title`)  VALUES ('".addslashes($_POST['cattitle'])."')";
+	$InsertSql = mysqli_query($sql,$con);	
+}
+
+if ($_POST['updatenew'])
+{
+	if ($_POST['catindex'] !="0")
+	{
+		$updateQuery = "UPDATE `question_categories` 
+		SET 
+		`title` ='".addslashes($_POST['cattitle'])."'
+		WHERE `index` ='".mysql_real_escape_string($_POST['catindex'])."'";
+		$update =  mysqli_query($updateQuery,$con) or die(mysqli_error($con));  
+	}	
+}
+
+
+
+
+/*
+if ($_POST['catindex'] == "0")
+{
+	$sql= "INSERT INTO `navigation` (`catagory`,`area`,`building_name_signing`,`building_name`,`devision`,`floor`)  VALUES ('".addslashes($_POST['cattitle'])."','".addslashes($_POST['catarea'])."','".addslashes($_POST['catbuilding'])."','".addslashes($_POST['catbuildname'])."','".addslashes($_POST['catdev'])."','".addslashes($_POST['catfloor'])."')";
+	$InsertSql = mysql_query($sql);		
+}
+
+if ($_POST['catindex'] !="0")
+{
+	$updateQuery = "UPDATE `navigation`
+	SET  
+	`catagory` ='".addslashes($_POST['cattitle'])."',
+	`area` ='".addslashes($_POST['catarea'])."',
+	`building_name_signing` ='".addslashes($_POST['catbuilding'])."',
+	`building_name` ='".addslashes($_POST['catbuildname'])."',
+	`devision` ='".addslashes($_POST['catdev'])."',
+	`floor` ='".addslashes($_POST['catfloor'])."'
+	
+	
+	WHERE `index` ='".mysql_real_escape_string($_POST['catindex'])."'";
+	$update =  mysql_query($updateQuery) or die(mysql_error()); 	
+}
+*/
+
+
+if ($_GET['del'])
+{
+	$updateQuery = "UPDATE `question_categories`
+	SET  
+	`deleted` ='1'
+
+	WHERE `index` ='".mysql_real_escape_string($_GET['del'])."'";
+	$update =  mysql_query($updateQuery) or die(mysql_error()); 
+
+	
+	//$sql = "DELETE FROM `contacts` WHERE `index` = '".$_GET['del']."'";
+	//$del = mysql_query($sql);	
+
+}
+
+
 
 ?>
-                <aside id="sidebar">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css">
+     <!-- <link rel="stylesheet" href="assets/css/vendor/animate.css">
+        <link rel="stylesheet" href="assets/css/vendor/font-awesome.min.css">
+        <link rel="stylesheet" href="assets/js/vendor/animsition/css/animsition.min.css"> -->
+        <link rel="stylesheet" href="assets/js/vendor/datatables/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="assets/js/vendor/datatables/datatables.bootstrap.min.css">
+        <link rel="stylesheet" href="assets/js/vendor/datatables/extensions/ColReorder/css/dataTables.colReorder.min.css">
+         <link rel="stylesheet" href="assets/js/vendor/datatables/extensions/Responsive/css/dataTables.responsive.css">
+         <link rel="stylesheet" href="assets/js/vendor/datatables/extensions/ColVis/css/dataTables.colVis.min.css">
+        <link rel="stylesheet" href="assets/js/vendor/datatables/extensions/TableTools/css/dataTables.tableTools.min.css">
+        <link rel="stylesheet" href="assets/js/vendor/datetimepicker/css/bootstrap-datetimepicker.min.css">
+        <link rel="stylesheet" href="assets/css/main.css"> -->
+         <script src="assets/js/vendor/modernizr/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+
+</head>
+ <body id="minovate" class="appWrapper">
 
 
-                    <div id="sidebar-wrap">
-
-                        <div class="panel-group slim-scroll" role="tablist">
-                            <div class="panel panel-default">
-                         
-                                <div id="sidebarNav" class="panel-collapse collapse in" role="tabpanel">
-                                    <div class="panel-body">
+<div id="wrap" class="animsition">
 
 
-                                        <!-- ===================================================
-                                        ================= NAVIGATION Content ===================
-                                        ==================================================== -->
-										
-										<!--
-										active open
-										-->
-										
-                                        <ul id="navigation">
-<!--
-<span class="badge bg-lightred">44</span></span> <i class="fa fa-question"></i>
--->
-										
+    <section id="header">
+        <header class="clearfix">
 
-                                            <li class="<?if ($menu =="questions") { print 'active open'; } ?>" >
-                                                <a role="button" tabindex="0"><i class="fa fa-question"></i> <span>שאלות</span> </a>
-                                                <ul>
+         
+            <div class="branding">
+                <a class="brand" href="index.php">
+                    <span><strong>ZAMBURA </strong></span>
+                </a>
+                <a href="#" class="offcanvas-toggle visible-xs-inline"><i class="fa fa-bars"></i></a>
+            </div>
+    
+            <ul class="nav-right pull-right list-inline">
+            
 
+                
+                
 
-                                                            <?php
-                                                            $query5 = "SELECT * FROM `question_categories`  WHERE `deleted` = '0' ORDER BY `title` ASC ";
-                                                            $result5=mysqli_query($query5,$con) or die('error connecting54');
-
-                                                            if ($menu == "questions")
-                                                                $activeclass = "active";
-                                                            else
-                                                                $activeclass = "";
-
-                                                            while ( $row5 = mysqli_fetch_array($result5) ) {
+                <li class="dropdown nav-profile">
+                    
+                    <a href class="dropdown-toggle" data-toggle="dropdown">
+                    
+                        <span>מנהל <i class="fa fa-angle-down"></i></span>
+                    </a>
+                    
+                    <ul class="dropdown-menu animated littleFadeInRight" role="menu">
 
 
-                                                                $query2 = "SELECT * FROM `questions`   WHERE `category_id` = '".$row5['index']."'  ";
-                                                                $result2=mysqli_query($query2,$con) or die('error connecting55');
-                                                                $num_rows2 = mysqli_num_rows($result2);
+                        <li>
+                            <a href="index.php?logout=1">
+                                <i class="fa fa-sign-out"></i>התנתקות
+                            </a>
+                        </li>
 
-                                                                print '<li class="'.$activeclass.'"><a href="questions.php?cat='.$row5['index'].'"><i class="fa fa-caret-right"></i> '.stripslashes($row5['title']).' <span class="badge bg-lightred">'.$num_rows2.'</span></span> </a></li>';
+                    </ul>
 
-
-                                                                  }
-                                                               ?>
-
-                                                        </ul>
-                                                    </li>
-
-                                            <li class="<?if ($submenu =="general") { print 'active open'; } ?>" >
-                                                <a role="button" tabindex="0"><i class="fa fa-cog"></i> <span>ניהול</span> </a>
-                                                <ul>
-                                                        <li style="text-align:right;" class="<?if ($menu =="question_catagory") { print 'active'; } ?>"><a href="question_catagory.php"><span>קטגוריות שאלות </span><i class="fa fa-info-circle"></i> </a></li>
-                                                         <li style="text-align:right;" class="<?if ($menu =="question_clues") { print 'active'; } ?>"><a href="question_clues.php"><span>רמזים לשאלות </span><i class="fa fa-info-circle"></i> </a></li>
-                                                         <li style="text-align:right;" class="<?if ($menu =="game_prizes") { print 'active'; } ?>"><a href="game_prizes.php"><span>פרסים </span><i class="fa fa-info-circle"></i> </a></li>
-                                                         <li style="text-align:right;" class="<?if ($menu =="specialist_recommendation") { print 'active'; } ?>"><a href="specialist_recommendation.php"><span>המלצת המומחה  </span><i class="fa fa-info-circle"></i> </a></li>
-                                                         <li style="text-align:right;" class="<?if ($menu =="questions_motivation") { print 'active'; } ?>"><a href="questions_motivation.php"><span>הודעות פרגון  </span><i class="fa fa-info-circle"></i> </a></li>
+                </li>
+                
+            </ul>
+        
 
 
-                                                    <li style="text-align:right;" class="<?if ($menu =="tips") { print 'active'; } ?>"><a href="tips.php"><span>טיפים </span><i class="fa fa-info-circle"></i> </a></li>
-                                                        <li style="text-align:right;" class="<?if ($menu =="tips_catagory") { print 'active'; } ?>"><a href="tips_catagory.php"><span>קטגוריות דילים </span><i class="fa fa-info-circle"></i> </a></li>
-                                                        <li style="text-align:right;" class="<?if ($menu =="suppliers") { print 'active'; } ?>"><a href="suppliers.php"><span>ספקים </span><i class="fa fa-info-circle"></i> </a></li>
-                                                        <li style="text-align:right;" class="<?if ($menu =="deals") { print 'active'; } ?>"><a href="deals.php"><span>דילים </span><i class="fa fa-info-circle"></i> </a></li>
-                                                        <li style="text-align:right;" class="<?if ($menu =="calander") { print 'active'; } ?>"><a href="calander.php"><span>לוח שנה </span><i class="fa fa-info-circle"></i> </a></li>
-                                              </ul>
-                                            </li>
 
-                                            <li style="text-align:right;" class="<? if ($menu =="information") { print 'active'; } ?>"><a href="information.php"> <span>מידע שימושי </span><i class="fa fa-info-circle"></i> </a></li>
- 											<li style="text-align:right;" class="<? if ($menu =="deals") { print 'active'; } ?>"><a href="dealsbycat.php"> <span>דילים לפי ספק </span><i class="fa fa-gift"></i> </a></li>
+        </header>
 
-<!--                                            <li style="text-align:right;" class="--><?// if ($menu =="catalog_categories") { print 'active'; } ?><!--"><a href="catalog_categories.php"> <span>קטגוריות לקטלוג </span><i class="fa fa-list"></i> </a></li>-->
-
-                                            <li style="text-align:right;" class="<? if ($menu =="banners") { print 'active'; } ?>"><a href="banners.php"> <span>ניהול באנרים </span><i class="fa fa-picture-o"></i> </a></li>
-                                            <li style="text-align:right;" class="<? if ($menu =="banners_new_android") { print 'active'; } ?>"><a href="banners_new_android.php"> <span>ניהול באנרים אנדרואיד </span><i class="fa fa-picture-o"></i> </a></li>
-                                            <li style="text-align:right;" class="<? if ($menu =="banners_new_iphone") { print 'active'; } ?>"><a href="banners_new_iphone.php"> <span>ניהול באנרים אייפון </span><i class="fa fa-picture-o"></i> </a></li>
-                                            <li style="text-align:right;" class="<? if ($menu =="banners_new_stats") { print 'active'; } ?>"><a href="banners_new_stats.php"> <span>סטיסטיקות באנרים </span><i class="fa fa-bar-chart"></i> </a></li>
+    </section>
+    <div id="controls">
 
 
-                                            <li style="text-align:right;" class="<? if ($menu =="messagespecialist") { print 'active'; } ?>"><a href="messagespecialist.php">  <span>פניה למומחה <?= $newMessagesCount;?> </span>  <i class="fa fa-comment"></i> </a></li>
 
 
-                                            <li style="text-align:right;" class="<? if ($menu =="daily_winners") { print 'active'; } ?>"><a href="daily_winners.php">  <span>זוכים יומיים  </span>  <i class="fa fa-trophy"></i> </a></li>
-                                            <li style="text-align:right;" class="<? if ($menu =="first_prize_winner_bank") { print 'active'; } ?>"><a href="first_prize_winner_bank.php">  <span>פרטי בנק  <?= $unreadBank;?></span>  <i class="fa fa-list"></i> </a></li>
-                                            <li style="text-align:right;" class="<? if ($menu =="second_price_winners") { print 'active'; } ?>"><a href="second_price_winners.php">  <span>זכיה בשאלת בונוס  <?= $second_price_winners;?></span>  <i class="fa fa-list"></i> </a></li>
 
 
-                                            <li style="text-align:right;" class="<? if ($menu =="points_date") { print 'active'; } ?>"><a href="points_date.php">  <span>ניקוד לפי תאריך  </span>  <i class="fa fa-list"></i> </a></li>
-                                            <li style="text-align:right;" class="<? if ($menu =="daily_bonus") { print 'active'; } ?>"><a href="daily_bonus.php">  <span>ענו על שאלת בונוס  </span>  <i class="fa fa-list"></i> </a></li>
+</div>
+<section id="content">
+
+<div class="page page-full page-calendar">
 
 
-                                            <li style="text-align:right;" class="<? if ($menu =="push") { print 'active'; } ?>"><a href="push.php?type=1"> <span>שליחת הודעות </span><i class="fa fa-comment-o"></i> </a></li>
-											
- 											<li style="text-align:right;" class="<? if ($menu =="push_new") { print 'active'; } ?>"><a href="push_new.php"> <span>שליחת הודעות לנרשמים חדשים </span><i class="fa fa-comment-o"></i> </a></li>
+    <div class="tbox tbox-sm">
+    <div class="tcol">
+						
+                        <!-- right side header -->
+                        <div class="p-15 bg-white b-b">
 
-                                            <li style="text-align:right;" class="<? if ($menu =="users") { print 'active'; } ?>"><a href="users.php"> <span>משתמשים </span><i class="fa fa-users"></i> </a></li>
-
- 											<li style="text-align:right;" class="<? if ($menu =="topscores") { print 'active'; } ?>"><a href="topscores.php?year=<?= date("Y");?>"> <span>לוח תוצאות </span><i class="fa fa-trophy"></i> </a></li>
-											
-											 <li style="text-align:right;" class="<? if ($menu =="dailyquestion") { print 'active'; } ?>"><a href="dailyquestion.php"> <span>השאלה היומית </span><i class="fa fa-info-circle"></i> </a></li>
-											 <li style="text-align:right;" class="<? if ($menu =="randomquestions") { print 'active'; } ?>"><a href="randomquestions.php"> <span>שאלות שהוגרלו </span><i class="fa fa-info-circle"></i> </a></li>
-
-											 <li style="text-align:right;" class="<? if ($menu =="partnercode") { print 'active'; } ?>"><a href="partnercode.php"> <span>משתמשים שהוזמנו </span><i class="fa fa-users"></i> </a></li>
-											 <li style="text-align:right;" class="<? if ($menu =="newusers") { print 'active'; } ?>"><a href="newusers.php"> <span>משתמשים בגרסה החדשה </span><i class="fa fa-users"></i> </a></li>
-											 <li style="text-align:right;" class="<? if ($menu =="todayusers") { print 'active'; } ?>"><a href="todayusers.php"> <span>הרשמות משתמשים לפי תאריך </span><i class="fa fa-users"></i> </a></li>
-                                            <li style="text-align:right;" class="<? if ($menu =="monthusers") { print 'active'; } ?>"><a href="monthusers.php"> <span>הרשמות משתמשים החודש </span><i class="fa fa-users"></i> </a></li>
-                                            <li style="text-align:right;" class="<? if ($menu =="ageusers") { print 'active'; } ?>"><a href="ageusers.php"> <span>הרשמות לפי גיל </span><i class="fa fa-users"></i> </a></li>
-
-											 <li style="text-align:right;" class="<? if ($menu =="gascompanies") { print 'active'; } ?>"><a href="gas_station_catagories.php"> <span>חברות דלק </span><i class="fa fa-car"></i> </a></li>
-											 
-
-
-											 <li style="text-align:right;" class="<? if ($menu =="landingpage") { print 'active'; } ?>"><a href="landingpage.php"> <span>הרשמות דף נחיתה </span><i class="fa fa-users"></i> </a></li>
-	
-											<!--
-											 <li style="text-align:right;" class="<? if ($menu =="managedays") { print 'active'; } ?>"><a href="managedays.php"> <span>ימי השנה </span><i class="fa fa-calendar"></i> </a></li>
-											-->
-                                            <li style="text-align:right;" class="<? if ($menu =="push_logs") { print 'active'; } ?>"><a href="push_logs.php"> <span>לוגים פוש </span><i class="fa fa-list"></i> </a></li>
-
-                                            <li style="text-align:right;" class="<? if ($menu =="stats") { print 'active'; } ?>"><a href="stats.php"> <span>סטיסטיקות </span><i class="fa fa-bar-chart"></i> </a></li>
-											
-											<!--
- 											<li style="text-align:right;" class="<? if ($menu =="settings") { print 'active'; } ?>"><a href="settings.php"> <span>הגדרות אפליקציה </span><i class="fa fa-cog"></i> </a></li>
-											-->
-											
-                                        </ul>
-                                    
-                                        <!--/ NAVIGATION Content -->
-                                        
-                                        
-                                    </div>
+                            <div class="btn-group pull-right">
+                                <button type="button" class="btn btn-default btn-sm br-2-l"><i class="fa fa-angle-left"></i></button>
+                                <button type="button" class="btn btn-default btn-sm br-2-r"><i class="fa fa-angle-right"></i></button>
+                            </div>
+                            <div class="btn-toolbar">
+                                <div class="btn-group mr-10">
+                                    <label class="checkbox checkbox-custom-alt m-0 mt-5"><input type="checkbox" id="select-all"><i></i> Select All</label>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-default btn-sm br-2"><i class="fa fa-refresh"></i></button>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-default btn-sm br-2">More <span class="caret"></span></button>
                                 </div>
                             </div>
-							
+
                         </div>
+                        <div class="col-md-12" style="text-align:right; margin-top:15px; ">
 
+					
+
+								
+							
+<!-- tile -->
+<section class="tile">
+
+
+
+    <div class="tile-body">
+
+<!-- tile -->
+
+
+<!-- tile -->
+<section class="tile">
+
+    <!-- tile header -->
+    <div class="tile-header dvd dvd-btm">
+
+        <h1 class="custom-font"><strong>קטגוריות שאלות </strong></h1>
+
+    </div>
+    <div class="tile-body p-0">
+								
+                              <!-- tile body -->
+                                <div class="tile-body">
+                              <div class="table-responsive">
+                                        <table class="table table hover" id="basic-usage2" style="width:100%" align="center">
+                                            <thead>
+                                            <tr>
+                     <th  style="text-align:right; width:30%" class="no-sort">אפשריות</th>
+                     <th  style="text-align:center; width:30%">כמות שאלות</th>
+                     <th  style="text-align:center; width:30%">כותרת</th>
+					<th  style="width:5%">Id</th>
+					
+                 </tr>
+                 </thead>
+             <tbody>
+            <?php
+           
+				$i = 0;
+				$query = "SELECT * FROM `question_categories`  WHERE `deleted` = '0' ORDER BY `title` ASC";
+				$result=mysqli_query($query,$con); 
+				$num_rows = mysqli_num_rows($result);
+				
+				while ( $row = mysqli_fetch_assoc($result) )
+				{
+				$i++;
+              
+                     $query2 = "SELECT * FROM `questions`   WHERE `category_id` = '".$row['index']."'  ";
+                     $result2=mysqli_query($query2,$con) or die('error connecting55');
+                     $num_rows2 = mysqli_num_rows($result2);
+					
+                 
+			?>
+             <tr>
+			
+                 <td class="actions">
+													<button  onClick="ConfirmDelete('<?= $row['index'];?>')"  class="btn btn-info btn-rounded btn-icon-only btn-ef btn-ef-7 btn-ef-7g mb-10"><i class="fa fa-trash"></i> Add <i class="after fa fa-plus"></i></button>
+													<button  onClick="editCatagory('<?= $row['index'];?>','עריכת קטגוריה')" data-toggle="modal" data-target="#tipmodal" data-options="splash-2 splash-ef-9"  class="btn btn-info btn-rounded btn-icon-only btn-ef btn-ef-7 btn-ef-7g mb-10"><i class="fa fa-pencil"></i> Add <i class="after fa fa-plus"></i></button>
+											</td>
+                                            <td align="center" >
+<!--                                                <a style="" href="questions_by_category.php?id=--><?//= $row['index'];?><!--">-->
+                                                    <?= $num_rows2;?>
+<!--                                                </a>-->
+                                            </td>
+                                            <td align="center" ><?= stripslashes($row['title']);?></td>
+
+                                            <td align="center" ><?= $row['index'];?></td>
+
+                                        </tr>
+										
+											<input type="hidden" id="dbtitle_<?= $row['index'];?>" name="dbtitle_<?= $row['index'];?>" value='<?= stripslashes($row['title']);?>'>
+										<?php
+										}
+										?>										
+											
+
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="p-15 bg-white" style="min-height: 61px; text-align:center;">
+
+                                    <button class="btn btn-sm btn-default pull-right visible-sm visible-xs" data-toggle="collapse" data-target="#mail-nav" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-bars"></i></button>
+                                    <a href="#"  onClick="addCatagory(0,'','הוספת קטגוריה')" data-toggle="modal" data-target="#tipmodal" data-options="splash-2 splash-ef-9" class="btn btn-sm btn-lightred b-0 br-2 text-strong">הוספת קטגוריה</a>
+
+                                </div>
+                                </div>
+
+<!-- /right side body -->
+
+</div>
+<!-- /right side -->
+
+</div>
+
+
+
+</div>
+
+</section>
+
+</div>
+        <!--/ Application Content -->
+
+
+        <!-- Splash Modal -->
+        <form method="post" action="" enctype="multipart/form-data" data-parsley-validate>
+        <div class="modal splash fade" id="tipmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title custom-font" id="modaltitle"></h3>
                     </div>
+                    <div class="modal-body">
+                    
+                    <!-- tile -->
+                            <section class="tile">
+
+                                <!-- tile body -->
+                                <div class="tile-body">
+
+									<div class="form-group" style="direction:rtl;">
+										<label for="exampleInputEmail1">קטגוריה:</label>
+										<input type="text" class="form-control" value='' name="cattitle" id="cattitle" placeholder="שם קטגוריה">
+									</div>   
+
+ 
+
+									<!--
+									<div class="form-group" style="direction:rtl;">
+										<label for="exampleInputEmail1">תמונה:</label>
+										<input type="file" name="file" class="form-control" >
+									</div>  
+								    -->
+                                </div>
+                                <!-- /tile body -->
+
+                            </section>                          
+                                                    
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default btn-border" data-dismiss="modal">ביטול</button>
+                        <button class="btn btn-default btn-border" type="submit">עדכן</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" value="0" name="catindex" id="catindex">
+		<input type="hidden" value="1" name="updatenew" id="updatenew">
+        </form>
 
 
-                </aside>
+
+
+        <!-- Splash Modal -->
+        <form method="post" action="" enctype="multipart/form-data" data-parsley-validate>
+        <div class="modal splash fade" id="adddate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title custom-font" id="modaltitle">הוספת תאריך</h3>
+                    </div>
+                    <div class="modal-body">
+                    
+                    <!-- tile -->
+                            <section class="tile">
+
+                               <!-- tile body -->
+                                <div class="tile-body">
+
+									<div class="form-group" style="direction:rtl;">
+										<label for="exampleInputEmail1">בחירת תאריך:</label>
+											 <div class='input-group datepicker w-360' data-format="DD/MM/YYYY" style="direction:ltr;">
+												<input type='text' name="deal_date" pattern="\d{1,2}/\d{1,2}/\d{4}" class="form-control" required />
+												<span class="input-group-addon">
+													<span class="fa fa-calendar"></span>
+												</span>
+											</div>
+									</div> 
+									
+									<div class="form-group" style="direction:rtl;">
+
+												<label for="showapp">בחירת סוג: </label>
+                                                <select name="sugselect" class="form-control" required>
+												    <option value="" >יש לבחור סוג</option>
+													<option value="1" >חיילים</option>
+												    <option value="2" >אזרחים</option> 
+												    <option value="3" >כולם</option> 
+												</select>
+                                            </div>
+
+
+ 
+
+									<!--
+									<div class="form-group" style="direction:rtl;">
+										<label for="exampleInputEmail1">תמונה:</label>
+										<input type="file" name="file" class="form-control" >
+									</div>  
+								    -->
+                                </div>
+                                <!-- /tile body -->
+
+                            </section>                          
+                                                    
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default btn-border" data-dismiss="modal">ביטול</button>
+                        <button class="btn btn-default btn-border" type="submit">עדכן</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" value="0" name="tipid" id="tipid">
+        </form>
+
+
+    
+</body>
+</html>
