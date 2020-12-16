@@ -153,7 +153,12 @@ if ($_GET['del'])
     <div id="controls">
 
 
-<!-- 
+<!-- <?php
+$submenu = 'general';
+$menu = 'question_catagory';
+include_once('menu.php');
+?> -->
+
 
 
 </div>

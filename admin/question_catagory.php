@@ -1,4 +1,4 @@
-<?
+<?php
 if (!isset($_SESSION)) {
 session_start();
 }
@@ -17,19 +17,19 @@ if (!$_SESSION['admin'])
 if ($_POST['catindex'] == "0")
 {
 	$sql= "INSERT INTO `question_categories` (`title`)  VALUES ('".addslashes($_POST['cattitle'])."')";
-	$InsertSql = mysql_query($sql);	
+	$InsertSql = mysqli_query($sql,$con);	
 }
 
 if ($_POST['updatenew'])
 {
-	if ($_POST['catindex'] !="0")
-	{
-		$updateQuery = "UPDATE `question_categories` 
-		SET 
-		`title` ='".addslashes($_POST['cattitle'])."'
-		WHERE `index` ='".mysql_real_escape_string($_POST['catindex'])."'";
-		$update =  mysql_query($updateQuery) or die(mysql_error());  
-	}	
+	// if ($_POST['catindex'] !="0")
+	// {
+	// 	$updateQuery = "UPDATE `question_categories` 
+	// 	SET 
+	// 	`title` ='".addslashes($_POST['cattitle'])."'
+	// 	WHERE `index` ='".mysqli_real_escape_string($_POST['catindex'])."'";
+	// 	$update =  mysqli_query($updateQuery,$con) or die(mysqli_error($con));  
+	// }	
 }
 
 
@@ -62,12 +62,12 @@ if ($_POST['catindex'] !="0")
 
 if ($_GET['del'])
 {
-	$updateQuery = "UPDATE `question_categories`
-	SET  
-	`deleted` ='1'
+	// $updateQuery = "UPDATE `question_categories`
+	// SET  
+	// `deleted` ='1'
 
-	WHERE `index` ='".mysql_real_escape_string($_GET['del'])."'";
-	$update =  mysql_query($updateQuery) or die(mysql_error()); 
+	// WHERE `index` ='".mysql_real_escape_string($_GET['del'])."'";
+	// $update =  mysql_query($updateQuery) or die(mysql_error()); 
 
 	
 	//$sql = "DELETE FROM `contacts` WHERE `index` = '".$_GET['del']."'";
@@ -360,16 +360,16 @@ if ($_GET['del'])
 										<?php
 											$i = 0;
 											$query = "SELECT * FROM `question_categories`  WHERE `deleted` = '0' ORDER BY `title` ASC";
-											$result=mysql_query($query) or die('error connecting55'); 
-											$num_rows = mysql_num_rows($result);
+											$result=mysqli_query($query,$con) or die('error connecting55'); 
+											$num_rows = mysqli_num_rows($result);
 											
-											while ( $row = mysql_fetch_array($result) )
+											while ( $row = mysqli_fetch_array($result) )
 											{
 											$i++;
 
                                                 $query2 = "SELECT * FROM `questions`   WHERE `category_id` = '".$row['index']."'  ";
-                                                $result2=mysql_query($query2) or die('error connecting55');
-                                                $num_rows2 = mysql_num_rows($result2);
+                                                $result2=mysqli_query($query2,$con) or die('error connecting55');
+                                                $num_rows2 = mysqli_num_rows($result2);
 												
 
 										?>
@@ -732,9 +732,3 @@ if ($_GET['del'])
 
     </body>
 </html>
-
-<?
-//print '<pre>';
-//print_r($_FILES);
-//print '</pre>';
-?>

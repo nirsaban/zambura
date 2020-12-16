@@ -1,6 +1,6 @@
-<?
+<?php
 $query90 = "SELECT  `read` FROM `message_specialist` WHERE `type` = 'question' AND  `read` = '0' ";
-$result90 = mysqli_query($query90) or die(mysqli_error()); 
+$result90 = mysqli_query($query90,$con) or die(mysqli_error($con)); 
 $num_rows90 = mysqli_num_rows($result90);
 
 if ($num_rows90 > 0)
@@ -10,7 +10,7 @@ else
     
 
     $query91 = "SELECT  `is_seen` FROM `first_prize_winner_bank` WHERE   `is_seen` = '0' ";
-    $result91 = mysqli_query($query91) or die(mysqli_error()); 
+    $result91 = mysqli_query($query91,$con) or die(mysqli_error($con)); 
     $num_rows91 = mysqli_num_rows($result91);
     
     if ($num_rows91 > 0)
@@ -20,7 +20,7 @@ else
         
     
         $query92 = "SELECT  `is_read` FROM `second_price_winners` WHERE   `is_read` = '0' ";
-        $result92 = mysqli_query($query92) or die(mysqli_error()); 
+        $result92 = mysqli_query($query92,$con) or die(mysqli_error($con)); 
         $num_rows92 = mysqli_num_rows($result92);
         
         if ($num_rows92 > 0)
