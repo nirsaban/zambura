@@ -64,7 +64,7 @@ else
 
                                                             <?php
                                                             $query5 = "SELECT * FROM `question_categories`  WHERE `deleted` = '0' ORDER BY `title` ASC ";
-                                                            $result5=mysqli_query($query5,$con) or die('error connecting55');
+                                                            $result5=mysqli_query($query5,$con) or die('error connecting54');
 
                                                             if ($menu == "questions")
                                                                 $activeclass = "active";

@@ -236,7 +236,7 @@ if ($_GET['del'])
 				while ( $row = mysqli_fetch_array($result) )
 				{
 				$i++;
-
+                      echo $row['index'];die;
                      $query2 = "SELECT * FROM `questions`   WHERE `category_id` = '".$row['index']."'  ";
                      $result2=mysqli_query($query2,$con) or die('error connecting55');
                      $num_rows2 = mysqli_num_rows($result2);
