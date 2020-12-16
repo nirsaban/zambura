@@ -5,7 +5,7 @@ session_start();
 
 include_once('../php/db.php');
 include_once('config.php');
-
+echo 'here';die;
 mb_internal_encoding("UTF-8");
 
 if (!$_SESSION['admin'])

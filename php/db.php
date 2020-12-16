@@ -1,10 +1,10 @@
 <?php
 
-	$dbhost = "127.0.0.1";
-	$dbuser = "onclickj_main";
-	$dbpass = "parnasa2020";
+	$dbhost = "localhost";
+	$dbuser = "root";
+	$dbpass = "";
 		
-	$con = mysqli_connect($dbhost, $dbuser, $dbpass,'onclickj_zambura');
+	$con = mysqli_connect($dbhost, $dbuser, $dbpass,'ofer');
 	 if(! $con )
     	{
 	  die('Could not connect: ' . mysqli_error($con));
